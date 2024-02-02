@@ -1,47 +1,58 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import { ref } from 'vue';
+
+const numero1 = ref(0);
+const numero2 = ref(0);
+const operacao = ref('somar');
+
+function calcularResultado() {
+  switch (operacao.value) {
+    case 'somar':
+      return Number(numero1.value) + Number(numero2.value);
+    case 'subtrair':
+      return Number(numero1.value) - Number(numero2.value);
+    case 'multiplicar':
+      return Number(numero1.value) * Number(numero2.value);
+    case 'dividir':
+      return numero2.value !== 0 ? Number(numero1.value) / Number(numero2.value) : 'Não é possível dividir por zero';
+    default:
+      return 'Operação inválida';
+  }
+}
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+  <div id="app" class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <h2 class="text-center mb-4">Calculadora Vue.js</h2>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+        <div class="mb-3">
+          <label for="numero1" class="form-label">Número 1:</label>
+          <input type="number" class="form-control" v-model.number="numero1" id="numero1" placeholder="Número 1">
+        </div>
+
+        <div class="mb-3">
+          <label for="numero2" class="form-label">Número 2:</label>
+          <input type="number" class="form-control" v-model.number="numero2" id="numero2" placeholder="Número 2">
+        </div>
+
+        <div class="mb-3">
+          <label for="operacao" class="form-label">Operação:</label>
+          <select class="form-select" v-model="operacao" id="operacao">
+            <option value="somar">Somar</option>
+            <option value="subtrair">Subtrair</option>
+            <option value="multiplicar">Multiplicar</option>
+            <option value="dividir">Dividir</option>
+          </select>
+        </div>
+
+        <p class="mb-5 fs-5 fw-bold">Resultado: {{ calcularResultado() }}</p>
+      </div>
     </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  </div>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-}
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
 </style>
